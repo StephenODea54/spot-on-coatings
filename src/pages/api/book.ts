@@ -9,8 +9,8 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
 
     const result = await resend.emails.send({
-      from: "Bookings <bookings@spotoncoatings.com>",
-      to: ["hey@spotoncoatings.com"],
+      from: "Bookings <bookings@spotoncoatings.org>",
+      to: ["hey@spotoncoatings.org"],
       subject: "Test Email",
       html: `<p>${data.message ?? "Hello"}</p>`,
     });
