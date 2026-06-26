@@ -55,7 +55,7 @@ const services = [
             Appointment Details
           </Text>
 
-          <form class="space-y-8 mt-8">
+          <form class="space-y-8 mt-8" id="booking-form">
             <!-- Name -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
@@ -292,4 +292,41 @@ const services = [
       defaultDate: allowedDates[0],
     });
   </script>
+  <script is:inline>
+  const form = document.getElementById("booking-form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: formData.get("first-name"),
+      lastName: formData.get("last-name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      year: formData.get("year"),
+      make: formData.get("make"),
+      model: formData.get("model"),
+      service: formData.get("service-type"),
+      date: formData.get("preferred-date"),
+      details: formData.get("details"),
+    };
+
+    const res = await fetch("/api/book", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      alert("Booking request sent!");
+      form.reset();
+    } else {
+      alert("Something went wrong. Try again.");
+    }
+  });
+</script>
 </BaseLayout>

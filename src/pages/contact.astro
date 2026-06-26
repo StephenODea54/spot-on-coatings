@@ -63,7 +63,7 @@ const openingHours = [
           >
             Send us a message
           </Text>
-          <form class="space-y-8 mt-8">
+          <form class="space-y-8 mt-8" id="contact-form">
             <div class="space-y-2">
               <label
                 for="first-name"
@@ -270,4 +270,36 @@ const openingHours = [
       </div>
     </Wrapper>
   </section>
+  <script is:inline>
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: formData.get("first-name"),
+      lastName: formData.get("last-name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+    };
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      alert("Message sent!");
+      form.reset();
+    } else {
+      alert("Something went wrong. Try again.");
+    }
+  });
+</script>
 </BaseLayout>
