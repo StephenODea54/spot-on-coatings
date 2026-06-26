@@ -1,0 +1,37 @@
+---
+// Fundatons
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import ServiceCard from "@/components/services/ServiceCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const services = await getCollection("services");
+---
+
+<section>
+  <Wrapper variant="standard" class="py-12 lg:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-3 lg:itmes-end">
+      <div class="lg:col-span-2">
+        <Text
+          tag="span"
+          variant="textSM"
+          class="pl-4 font-medium uppercase border-l text-base-900 font-display border-accent-500"
+        >
+          Services
+        </Text>
+        <Text
+          tag="h2"
+          variant="displayXL"
+          class="mt-8 uppercase font-display text-base-900"
+        >
+          Expert Detailing Services
+        </Text>
+      </div>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+      {services.map((service) => <ServiceCard service={service} />)}
+    </div>
+  </Wrapper>
+</section>
